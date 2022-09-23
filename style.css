@@ -1,0 +1,34 @@
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator {
+  height: 700px;
+  width: 500px;
+  background-color: black;
+  padding: 50px;
+}
+
+#result {
+  width: 100%;
+  height: 20%;
+  background-color: white;
+  margin-top: -5%;
+  margin-bottom: 5%;
+}
+
+#buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5%;
+  height: 80%;
+}
+
+button {
+  width: 30%;
+  height: 50%;
+}
