@@ -30,15 +30,16 @@ const equalsButton = document.getElementById("equals")
 deleteButton.addEventListener("click", removeOne)
 
 function numberButtonClicked() {
+  if (resultDiv.innerText == "0") resultDiv.innerText = ""
+
   resultDiv.innerText += this.innerText
 } 
 
 function removeOne() {
   let text = resultDiv.innerText
+  if (text.length <= 1) return resultDiv.innerText = "0"
 
-  if (text == "0") return
-
-  resultDiv.innerText = text.slice(0, -1)
+  resultDiv.innerText = resultDiv.innerText.slice(0, -1)
 }
 
 function showResult(result) {
