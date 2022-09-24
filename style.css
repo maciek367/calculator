@@ -1,11 +1,25 @@
 body {
   height: 100vh;
+  font-family: 'Courier New', Courier, monospace;
   margin: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: black;
+  gap: 5%;
+  font-weight: bold;
 }
+
+i {
+  color: white;
+  transition: 0.3s ease-in-out ;
+}
+
+i:hover {
+  transform: scale(1.2);
+}
+
 
 #calculator {
   height: 700px;
@@ -63,4 +77,8 @@ button {
   grid-template-rows: repeat(4, 1fr) ;
   grid-template-columns: repeat(4, 1fr);
   height: 80%;
+}
+
+#footer {
+  color: white;
 }
