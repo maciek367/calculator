@@ -1,6 +1,9 @@
 const input = document.getElementById("input")
 const previous = document.getElementById("previous")
 
+let previousNum = null
+let previousFunction = function(){}
+
 const clearButton = document.getElementById("clear")
 const deleteButton = document.getElementById("delete")
 
@@ -44,12 +47,51 @@ function clearInput() {
   input.innerText = "0"
 }
 
-function pushToPrevious() {
-  previous.innerText += input.innerText
+function equals() {
+  if (previous.innerText) previous.innerText += " " + input.innerText
+}
+
+function handleDivide() {
+  previousNum = Number(input.innerText)
+  if (previousNum) {
+    previous.innerText = parseFloat((previousNum / Number(input.innerText)).toFixed(3))
+  } else previous.innerText = input.innerText
+  previous.innerText += " / "
+  clearInput()
+}
+
+function handleMultiply() {
+  if (previousNum == null) {
+    previous.innerText = input.innerText
+    previousNum = input.innerText
+  }
+  else {
+    previousNum = previousNum * Number(input.innerText)
+    previous.innerText = Number(previousNum)
+  }
+  previous.innerText += " x "
+  clearInput()
+}
+
+function handleSubtract() {
+  if (previousNum == null) {
+    previousNum = Number(input.innerText)
+    previous.innerText = input.innerText
+  }
+  else {
+    previous.innerText = previousNum - Number(input.innerText)
+    previousNum = Number(previousNum) - Number(input.innerText)
+  }
+  previous.innerText += " - "
+  clearInput()
 }
 
 function handleAdd() {
-
+  previous.innerText = previousNum + Number(input.innerText)
+  previousNum = Number(previousNum) + Number(input.innerText)
+  previous.innerText += " + "
+  previousFunction = handleAdd
+  clearInput()
 }
 
 function divide(a,b) {
@@ -72,6 +114,7 @@ function add(a,b) {
 function clear() {
   previous.innerText = ""
   input.innerText = "0"
+  previousNum = null
 }
 
 function numberButtonClicked() {
@@ -81,12 +124,5 @@ function numberButtonClicked() {
 } 
 
 function removeOne() {
-  let text = input.innerText
-  if (text.length <= 1) return input.innerText = "0"
-
   input.innerText = input.innerText.slice(0, -1)
-}
-
-function showResult(result) {
-  input.innerText = result
 }

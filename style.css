@@ -48,14 +48,19 @@ i:hover {
 
 #previous {
   width: 92%;
-  margin: 2% 4%;
+  height: 50%;
+  padding: 1%;
+  margin: 0% 4%;
   text-align: end;
+  overflow: hidden;
 }
 
 #input {
-  width: 96%;
+  width: 94%;
+  height: 49%;
   font-size: 2rem;
-  margin: 0% 2%;
+  padding-bottom: 1%;
+  margin: 0% 3%;
   overflow: hidden;
   text-align: end;
 }
