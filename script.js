@@ -48,15 +48,38 @@ function clearInput() {
 }
 
 function equals() {
-  if (previous.innerText) previous.innerText += " " + input.innerText
+  if (!previousNum) return
+  let operator = previous.innerText[previous.innerText.length - 1]
+  previous.innerText += " " + input.innerText + " = "
+  switch(operator) {
+    case "+":
+      input.innerText = Number(previousNum) + Number(input.innerText)
+      break
+    case "-":
+      input.innerText = Number(previousNum) - Number(input.innerText)
+      break
+    case "*":
+      input.innerText = Number(previousNum) * Number(input.innerText)
+      break
+    case "/":
+      input.innerText = Number(previousNum) / Number(input.innerText)
+      break
+    default: 
+    
+  }
 }
 
 function handleDivide() {
-  previousNum = Number(input.innerText)
-  if (previousNum) {
-    previous.innerText = parseFloat((previousNum / Number(input.innerText)).toFixed(3))
-  } else previous.innerText = input.innerText
+  if (previousNum == null) { 
+    previous.innerText = input.innerText
+    previousNum = input.innerText
+  }
+  else {
+    previousNum = parseFloat((previousNum / Number(input.innerText)).toFixed(3))
+    previous.innerText = previousNum
+  }
   previous.innerText += " / "
+  previousFunction = handleDivide
   clearInput()
 }
 
@@ -70,6 +93,7 @@ function handleMultiply() {
     previous.innerText = Number(previousNum)
   }
   previous.innerText += " x "
+  previousFunction = handleMultiply
   clearInput()
 }
 
@@ -83,6 +107,7 @@ function handleSubtract() {
     previousNum = Number(previousNum) - Number(input.innerText)
   }
   previous.innerText += " - "
+  previousFunction = handleSubtract
   clearInput()
 }
 
