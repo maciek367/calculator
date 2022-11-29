@@ -2,7 +2,6 @@ const input = document.getElementById("input")
 const previous = document.getElementById("previous")
 
 let previousNum = null
-let previousFunction = function(){}
 
 const clearButton = document.getElementById("clear")
 const deleteButton = document.getElementById("delete")
@@ -47,6 +46,11 @@ function clearInput() {
   input.innerText = "0"
 }
 
+function previousNumDoesntExist() {
+  previous.innerText = input.innerText
+  previousNum = Number(input.innerText)
+}
+
 function equals() {
   if (!previousNum) return
   let operator = previous.innerText[previous.innerText.length - 1]
@@ -70,70 +74,52 @@ function equals() {
 }
 
 function handleDivide() {
-  if (previousNum == null) { 
-    previous.innerText = input.innerText
-    previousNum = input.innerText
-  }
-  else {
-    previousNum = parseFloat((previousNum / Number(input.innerText)).toFixed(3))
+  if (previousNum != null) { 
+    previousNum = parseFloat((previousNum / Number(input.innerText == "0" ? "1" : input.innerText)).toFixed(3))
     previous.innerText = previousNum
   }
+  else {
+    previousNumDoesntExist()
+  }
   previous.innerText += " / "
-  previousFunction = handleDivide
   clearInput()
 }
 
 function handleMultiply() {
-  if (previousNum == null) {
-    previous.innerText = input.innerText
-    previousNum = input.innerText
+  if (previousNum != null) {
+    console.log(previousNum)
+    previousNum = previousNum * Number(input.innerText == "0" ? "1" : input.innerText)
+    previous.innerText = previousNum
   }
   else {
-    previousNum = previousNum * Number(input.innerText)
-    previous.innerText = Number(previousNum)
+    previousNumDoesntExist()
   }
   previous.innerText += " x "
-  previousFunction = handleMultiply
   clearInput()
 }
 
 function handleSubtract() {
-  if (previousNum == null) {
-    previousNum = Number(input.innerText)
-    previous.innerText = input.innerText
+  if (previousNum != null) {
+    previous.innerText = previousNum - Number(input.innerText)
+    previousNum = previousNum - Number(input.innerText)
   }
   else {
-    previous.innerText = previousNum - Number(input.innerText)
-    previousNum = Number(previousNum) - Number(input.innerText)
+    previousNumDoesntExist()
   }
   previous.innerText += " - "
-  previousFunction = handleSubtract
   clearInput()
 }
 
 function handleAdd() {
-  previous.innerText = previousNum + Number(input.innerText)
-  previousNum = Number(previousNum) + Number(input.innerText)
+  if (previousNum != null) {
+    previous.innerText = previousNum + Number(input.innerText)
+    previousNum = previousNum + Number(input.innerText) 
+  }
+  else {
+    previousNumDoesntExist()
+  }
   previous.innerText += " + "
-  previousFunction = handleAdd
   clearInput()
-}
-
-function divide(a,b) {
-  if (b === 0) return "Can't divide by zero"
-  return (a / b).toFixed(3)
-}
-
-function multiply(a,b) {
-  return a * b
-}
-
-function subtract(a,b) {
-  return a - b
-}
-
-function add(a,b) {
-  return a + b
 }
 
 function clear() {
