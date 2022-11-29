@@ -52,6 +52,12 @@ function previousNumDoesntExist() {
   previousNum = Number(input.innerText)
 }
 
+function dot() {
+  if (input.innerText.includes(".")) return
+
+  input.innerText += "."
+}
+
 function equals() {
   if (previousNum == null || equalsBlocked) return
 
@@ -63,13 +69,13 @@ function equals() {
   previous.innerText += " " + input.innerText + " = "
   switch(operator) {
     case "+":
-      result = previousNum + Number(input.innerText)
+      result = (previousNum + Number(input.innerText)).toFixed(3)
       break
     case "-":
-      result = previousNum - Number(input.innerText)
+      result = (previousNum - Number(input.innerText)).toFixed(3)
       break
     case "x":
-      result = previousNum * Number(input.innerText)
+      result = (previousNum * Number(input.innerText)).toFixed(3)
       break
     case "/":
       result = (previousNum / Number(input.innerText)).toFixed(3)
@@ -77,7 +83,7 @@ function equals() {
   }
   previousNum = null
   equalsBlocked = true
-  input.innerText = result
+  input.innerText = parseFloat(result)
 }
 
 function handleDivide() {
@@ -95,7 +101,7 @@ function handleDivide() {
 
 function handleMultiply() {
   if (previousNum != null) {
-    previousNum = previousNum * Number(input.innerText == "0" ? "1" : input.innerText)
+    previousNum = parseFloat((previousNum * Number(input.innerText == "0" ? "1" : input.innerText)).toFixed(3))
     previous.innerText = previousNum
   }
   else {
@@ -108,7 +114,7 @@ function handleMultiply() {
 
 function handleSubtract() {
   if (previousNum != null) {
-    previous.innerText = previousNum - Number(input.innerText)
+    previous.innerText = parseFloat((previousNum - Number(input.innerText)).toFixed(3))
     previousNum = previousNum - Number(input.innerText)
   }
   else {
@@ -121,7 +127,7 @@ function handleSubtract() {
 
 function handleAdd() {
   if (previousNum != null) {
-    previous.innerText = previousNum + Number(input.innerText)
+    previous.innerText = parseFloat((previousNum + Number(input.innerText)).toFixed(3))
     previousNum = previousNum + Number(input.innerText) 
   }
   else {
