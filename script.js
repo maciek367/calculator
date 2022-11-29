@@ -2,6 +2,7 @@ const input = document.getElementById("input")
 const previous = document.getElementById("previous")
 
 let previousNum = null
+let equalsBlocked = false
 
 const clearButton = document.getElementById("clear")
 const deleteButton = document.getElementById("delete")
@@ -52,25 +53,31 @@ function previousNumDoesntExist() {
 }
 
 function equals() {
-  if (!previousNum) return
-  let operator = previous.innerText[previous.innerText.length - 1]
+  if (previousNum == null || equalsBlocked) return
+
+  let result = 0
+  let operator = previous.innerText.split(" ")[1]
+  // ex. "36 + "   =>   ["36","+"]
+  //                     take  ^
+
   previous.innerText += " " + input.innerText + " = "
   switch(operator) {
     case "+":
-      input.innerText = Number(previousNum) + Number(input.innerText)
+      result = previousNum + Number(input.innerText)
       break
     case "-":
-      input.innerText = Number(previousNum) - Number(input.innerText)
+      result = previousNum - Number(input.innerText)
       break
-    case "*":
-      input.innerText = Number(previousNum) * Number(input.innerText)
+    case "x":
+      result = previousNum * Number(input.innerText)
       break
     case "/":
-      input.innerText = Number(previousNum) / Number(input.innerText)
+      result = (previousNum / Number(input.innerText)).toFixed(3)
       break
-    default: 
-    
   }
+  previousNum = null
+  equalsBlocked = true
+  input.innerText = result
 }
 
 function handleDivide() {
@@ -81,19 +88,20 @@ function handleDivide() {
   else {
     previousNumDoesntExist()
   }
+  equalsBlocked = false
   previous.innerText += " / "
   clearInput()
 }
 
 function handleMultiply() {
   if (previousNum != null) {
-    console.log(previousNum)
     previousNum = previousNum * Number(input.innerText == "0" ? "1" : input.innerText)
     previous.innerText = previousNum
   }
   else {
     previousNumDoesntExist()
   }
+  equalsBlocked = false
   previous.innerText += " x "
   clearInput()
 }
@@ -106,6 +114,7 @@ function handleSubtract() {
   else {
     previousNumDoesntExist()
   }
+  equalsBlocked = false
   previous.innerText += " - "
   clearInput()
 }
@@ -118,6 +127,7 @@ function handleAdd() {
   else {
     previousNumDoesntExist()
   }
+  equalsBlocked = false
   previous.innerText += " + "
   clearInput()
 }
@@ -126,6 +136,7 @@ function clear() {
   previous.innerText = ""
   input.innerText = "0"
   previousNum = null
+  equalsBlocked = false
 }
 
 function numberButtonClicked() {
