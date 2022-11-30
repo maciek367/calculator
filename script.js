@@ -4,8 +4,6 @@ const previous = document.getElementById("previous")
 let previousNum = null
 let equalsBlocked = false
 
-// TODO add keyboard support
-
 const clearButton = document.getElementById("clear")
 const deleteButton = document.getElementById("delete")
 
